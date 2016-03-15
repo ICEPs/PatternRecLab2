@@ -15,10 +15,8 @@ def auto_canny(image, sigma=0.33):
 
 cv2.namedWindow('image', cv2.WINDOW_AUTOSIZE)
 
-im = cv2.imread('img.jpg') # convert to grayscale on read
-imgray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
-cv2.imshow('test', imgray)
-edge = auto_canny(imgray, sigma=1.0)
+im = cv2.imread('img.jpg',0) # convert to grayscale on read
+edge = auto_canny(im, sigma=1.0)
 img, contours, hierarchy = cv2.findContours(edge, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
 size = len(contours)
 g = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
