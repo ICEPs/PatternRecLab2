@@ -13,33 +13,21 @@ def auto_canny(image, sigma=0.33):
   # return the edged image
   return edged
 
-def nothing(*arg):
-        pass
+cv2.namedWindow('image', cv2.WINDOW_AUTOSIZE)
 
-# cv2.namedWindow('Settings', cv2.WINDOW_AUTOSIZE)
-# cv2.createTrackbar('thrs1', 'Settings', 2000, 5000, nothing)
-# cv2.createTrackbar('thrs2', 'Settings', 4000, 5000, nothing)
-
-# while True:
-img = cv2.imread('img.jpg',0) # convert to grayscale on read
-# thrs1 = cv2.getTrackbarPos('thrs1', 'Settings')
-# thrs2 = cv2.getTrackbarPos('thrs2', 'Settings')
-# edge = cv2.Canny(img, thrs1, thrs2, apertureSize=5)
-# for comparison
-# cv2.namedWindow('edge img')
-# cv2.imshow('edge img', edge)
-
-# cv2.namedWindow('auto canny img')
-cv2.imshow('auto canny img', auto_canny(img))
-
-img, contours, hierarchy = cv2.findContours(img, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-count = 0
-for c in contours:
-  print c[count][count]
-  # if len(c) == 4 and count < len(contours):
-  #   cv2.rectangle(img, c[count][count], c[count+1][count+1], color='r')
-  # count = count + 1
+im = cv2.imread('img.jpg') # convert to grayscale on read
+imgray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+cv2.imshow('test', imgray)
+edge = auto_canny(imgray, sigma=1.0)
+img, contours, hierarchy = cv2.findContours(edge, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+size = len(contours)
+g = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+for x in range(0, size):
+  c = contours[x]
+  x,y,w,h = cv2.boundingRect(c)
+  cv2.rectangle(g, (x,y), (x+w,y+h), (0,0,255))
+cv2.imshow('image', g)
 
 # exit mode
-cv2.waitKey(0)
+ch = cv2.waitKey(0)
 cv2.destroyAllWindows()
