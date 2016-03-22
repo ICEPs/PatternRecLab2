@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 import csv
-import math
 
 def auto_canny(image, sigma=0.33):
   # compute the median of the single channel pixel intensities
@@ -36,13 +35,6 @@ def getNGFeatureVector(img):
             features.append(img[i][j])
     return features
 
-def mean(numbers):
-    sum_everything = sum(numbers)
-    print sum_everything/len(numbers)
-    return sum_everything/len(numbers)
-    
-def variance(result):
-    return np.var(result)
 
 cv2.namedWindow('image', cv2.WINDOW_AUTOSIZE)
 
@@ -63,10 +55,10 @@ for a in range(0, size):
         newimg = buildNgMat(sobelMap(buildNgMat(cropped_g)));
         features = [];
         features = getNGFeatureVector(newimg)
-        #with open('csvfile.csv', 'a') as csvfile:
-            #spamwriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
-            #data = [str(a), features]            
-            #spamwriter.writerow(features)
+        with open('csvfile.csv', 'a') as csvfile:
+            spamwriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
+            data = [str(a), features]            
+            spamwriter.writerow(features)
         
         #cv2.imwrite('images'+str(a)+".jpg", newimg)
         # cropped_num = cropped_num+1
@@ -75,3 +67,4 @@ cv2.imshow('image', g)
 # exit mode
 ch = cv2.waitKey(0)
 cv2.destroyAllWindows()
+
