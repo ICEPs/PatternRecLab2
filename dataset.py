@@ -29,16 +29,17 @@ def buildNgMat(img):
 
 def getNGFeatureVector(img):
     # img must be grayscale
+
     features = []
     for i in range(0, 8):
         for j in range(0,8):
-            features.append(img[i][j])
+            features.append(img[j][i])
     return features
 
 
 cv2.namedWindow('image', cv2.WINDOW_AUTOSIZE)
 
-imagestr = 'fig1.png'
+imagestr = 'fig4.png'
 im = cv2.imread(imagestr,0) # convert to grayscale on read, where contours will be derived from
 g = cv2.imread(imagestr,3) # where the rects are to be drawn
 to_be_cropped = cv2.imread(imagestr,0) # image for cropping
@@ -53,16 +54,16 @@ for a in range(0, size):
     cv2.rectangle(g, (x,y), (x+w,y+h), (0,0,255))
     if(h > 10 and w > 10):
         cropped_g = to_be_cropped[y:y+h, x:x+w]
-        newimg = buildNgMat(sobelMap(buildNgMat(cropped_g)));
+        newimg = buildNgMat(sobelMap(cropped_g));
         features = [];
         features = getNGFeatureVector(newimg)
         with open('csvfile.csv', 'a') as csvfile:
-            spamwriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
-            data = [str(a), features]            
-            spamwriter.writerow(features)
+           spamwriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
+           data = [str(a), features]            
+           spamwriter.writerow(features)
         
         #cv2.imwrite('images'+str(a)+".jpg", cropped_g)
-        # cropped_num = cropped_num+1
+        #cropped_num = cropped_num+1
 cv2.imshow('image', g)
 
 # exit mode

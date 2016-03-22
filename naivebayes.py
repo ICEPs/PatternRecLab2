@@ -48,8 +48,8 @@ def variance(result):
 def gaussian(mean, var, x):
     pi = 3.14
     e = 2.714567
-    mul_one = 1.0/(math.sqrt(2.0*pi*var)+1)
-    divi = -(math.pow((x - mean), 2.0))/((2.0*var)+1)
+    mul_one = 1.0/(math.sqrt(2.0*pi*var))
+    divi = -(math.pow((x - mean), 2.0))/((2.0*var))
     mul_two = math.pow(e, divi)
     total = mul_one * mul_two
     return total
@@ -107,7 +107,7 @@ for a in range(0, 64):
     variance_list_zero.append(variance(dimens))
     means_list_zero.append(mean(dimens))
 
-imagestr = 'op.png'
+imagestr = 'fig4.png'
 im = cv2.imread(imagestr,0) # convert to grayscale on read, where contours will be derived from
 g = cv2.imread(imagestr,3) # where the rects are to be drawn
 to_be_cropped = cv2.imread(imagestr,0) # image for cropping
@@ -132,7 +132,7 @@ for a in range(0, size):
         total_gaussian_one = gaussian_total(gaussian_one, prob_one)
         total_gaussian_zero = gaussian_total(gaussian_zero, prob_zero)
         
-        if(total_gaussian_one > total_gaussian_zero):
+        if(total_gaussian_one < total_gaussian_zero):
             print "If-One"
             print total_gaussian_one
             print "If-Zero"
