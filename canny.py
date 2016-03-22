@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import csv
+import math
 
 def auto_canny(image, sigma=0.33):
   # compute the median of the single channel pixel intensities
@@ -35,12 +36,19 @@ def getNGFeatureVector(img):
             features.append(img[i][j])
     return features
 
+def mean(numbers):
+    sum_everything = sum(numbers)
+    print sum_everything/len(numbers)
+    return sum_everything/len(numbers)
+    
+def variance(result):
+    return np.var(result)
 
 cv2.namedWindow('image', cv2.WINDOW_AUTOSIZE)
 
-im = cv2.imread('fig2.png',0) # convert to grayscale on read, where contours will be derived from
-g = cv2.imread('fig2.png',3) # where the rects are to be drawn
-to_be_cropped = cv2.imread('fig2.png',0) # image for cropping
+im = cv2.imread('fig1.png',0) # convert to grayscale on read, where contours will be derived from
+g = cv2.imread('fig1.png',3) # where the rects are to be drawn
+to_be_cropped = cv2.imread('fig1.png',0) # image for cropping
 
 edge = auto_canny(im, sigma=20.0)
 img, contours, hierarchy = cv2.findContours(edge, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
@@ -55,10 +63,11 @@ for a in range(0, size):
         newimg = buildNgMat(sobelMap(buildNgMat(cropped_g)));
         features = [];
         features = getNGFeatureVector(newimg)
-        with open('csvfile.csv', 'a') as csvfile:
-            spamwriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
+        #with open('csvfile.csv', 'a') as csvfile:
+            #spamwriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
             #data = [str(a), features]            
-            spamwriter.writerow(features)
+            #spamwriter.writerow(features)
+        
         #cv2.imwrite('images'+str(a)+".jpg", newimg)
         # cropped_num = cropped_num+1
 cv2.imshow('image', g)
