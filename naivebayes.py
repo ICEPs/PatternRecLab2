@@ -107,7 +107,7 @@ for a in range(0, 64):
     variance_list_zero.append(variance(dimens))
     means_list_zero.append(mean(dimens))
 
-imagestr = 'fig4.png'
+imagestr = 'fig1.png'
 im = cv2.imread(imagestr,0) # convert to grayscale on read, where contours will be derived from
 g = cv2.imread(imagestr,3) # where the rects are to be drawn
 to_be_cropped = cv2.imread(imagestr,0) # image for cropping
