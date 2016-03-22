@@ -107,10 +107,10 @@ for a in range(0, 64):
     variance_list_zero.append(variance(dimens))
     means_list_zero.append(mean(dimens))
 
-
-im = cv2.imread('fig3.png',0) # convert to grayscale on read, where contours will be derived from
-g = cv2.imread('fig3.png',3) # where the rects are to be drawn
-to_be_cropped = cv2.imread('fig3.png',0) # image for cropping
+imagestr = 'op.png'
+im = cv2.imread(imagestr,0) # convert to grayscale on read, where contours will be derived from
+g = cv2.imread(imagestr,3) # where the rects are to be drawn
+to_be_cropped = cv2.imread(imagestr,0) # image for cropping
 
 edge = auto_canny(im, sigma=20.0)
 img, contours, hierarchy = cv2.findContours(edge, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)

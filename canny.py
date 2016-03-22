@@ -38,9 +38,10 @@ def getNGFeatureVector(img):
 
 cv2.namedWindow('image', cv2.WINDOW_AUTOSIZE)
 
-im = cv2.imread('fig1.png',0) # convert to grayscale on read, where contours will be derived from
-g = cv2.imread('fig1.png',3) # where the rects are to be drawn
-to_be_cropped = cv2.imread('fig1.png',0) # image for cropping
+imagestr = 'fig1.png'
+im = cv2.imread(imagestr,0) # convert to grayscale on read, where contours will be derived from
+g = cv2.imread(imagestr,3) # where the rects are to be drawn
+to_be_cropped = cv2.imread(imagestr,0) # image for cropping
 
 edge = auto_canny(im, sigma=20.0)
 img, contours, hierarchy = cv2.findContours(edge, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
@@ -60,7 +61,7 @@ for a in range(0, size):
             data = [str(a), features]            
             spamwriter.writerow(features)
         
-        #cv2.imwrite('images'+str(a)+".jpg", newimg)
+        #cv2.imwrite('images'+str(a)+".jpg", cropped_g)
         # cropped_num = cropped_num+1
 cv2.imshow('image', g)
 
